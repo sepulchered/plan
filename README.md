@@ -1,2 +1,2 @@
 # plan
-Simple cli task list
+Simple planer bot
