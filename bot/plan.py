@@ -7,7 +7,7 @@ import telepot.loop as pot_loop
 import telepot.delegate as pot_delegate
 
 
-log = logging.getLogger(__name__)
+logging.basicConfig(filename='plan_bot.log')
 
 
 BOT_API_TOKEN = os.environ.get('PLAN_BOT_TOKEN', '')
@@ -19,7 +19,7 @@ class Planner(telepot.helper.ChatHandler):
         super(Planner, self).__init__(*args, **kwargs)
 
     def on_chat_message(self, msg):
-        log.info('recieved message: "%s"')
+        logging.info('recieved message: "%s"')
         self.sender.sendMessage('gigla')
 
 
@@ -43,7 +43,7 @@ def index():
 
 @app.route('/bot/hook', methods=['GET', 'POST'])
 def on_event():
-    log.info('webhook has been called')
+    logging.info('webhook has been called')
     webhook.feed(request.data)
     return 'OK'
 
