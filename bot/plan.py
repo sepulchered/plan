@@ -44,7 +44,7 @@ def index():
 @app.route('/bot/hook', methods=['GET', 'POST'])
 def on_event():
     logging.info('webhook has been called')
-    webhook.feed(request.data)
+    webhook.feed(flask.request.data)
     return 'OK'
 
 
