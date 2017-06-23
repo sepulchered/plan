@@ -1,13 +1,9 @@
 import os
-import logging
 
 import flask
 import telepot
 import telepot.loop as pot_loop
 import telepot.delegate as pot_delegate
-
-
-logging.basicConfig(filename='plan_bot.log')
 
 
 BOT_API_TOKEN = os.environ.get('PLAN_BOT_TOKEN', '')
@@ -19,7 +15,7 @@ class Planner(telepot.helper.ChatHandler):
         super(Planner, self).__init__(*args, **kwargs)
 
     def on_chat_message(self, msg):
-        logging.info('recieved message: "%s"')
+        print('recieved message: "{}"'.format(msg))
         self.sender.sendMessage('gigla')
 
 
@@ -43,19 +39,19 @@ def index():
 
 @app.route('/bot/hook', methods=['GET', 'POST'])
 def on_event():
-    logging.info('webhook has been called')
+    print('webhook has been called')
     webhook.feed(flask.request.data)
     return 'OK'
 
 
 if __name__ == '__main__':
     try:
-        logging.info('trying to set webhook at url "%s"', BOT_HOOK_URL)
+        print('trying to set webhook at url "{}"'.format(BOT_HOOK_URL))
         bot.setWebhook(BOT_HOOK_URL)
     except telepot.exception.TooManyRequestsError:
         pass
     except Exception as ex:
-        logging.info('error while setting webhook %s', ex)
+        print('error while setting webhook', ex)
 
     webhook.run_as_thread()
     app.run()
