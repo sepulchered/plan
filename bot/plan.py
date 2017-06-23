@@ -50,9 +50,12 @@ def on_event():
 
 if __name__ == '__main__':
     try:
+        logging.info('trying to set webhook at url "%s"', BOT_HOOK_URL)
         bot.setWebhook(BOT_HOOK_URL)
     except telepot.exception.TooManyRequestsError:
         pass
+    except Exception as ex:
+        logging.info('error while setting webhook %s', ex)
 
     webhook.run_as_thread()
     app.run()
