@@ -32,6 +32,10 @@ webhook = pot_loop.OrderedWebhook(bot)
 # server related
 app = flask.Flask(__name__)
 
+@app.route('/')
+def index():
+    return 'planner bot'
+
 @app.route('/bot/hook', methods=['GET', 'POST'])
 def on_event():
     return 'gigla'
